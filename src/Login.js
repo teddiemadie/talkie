@@ -1,19 +1,106 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
+import axios from 'axios';
 import Logo from './img/logo.png'
 import { useCookies } from 'react-cookie';
 // import { useStateValue } from './StateProvider'
 
 function Login() {
+    const navigate = useNavigate();
+    const [firstLogin, setFirstLogin] = useState();
     const [userName, setUserName] = useState('');
     const [pwd, setPwd] = useState('');
-    const [acceptCookie, setAcceptCookie] = useState('false');
+    const [sessionID, setSessionID] = useState('');
+    const [token, setToken] = useState('');
+    const [expiredDate, setExpiredDate] = useState('');
+    const [acceptCookie, setAcceptCookie] = useState(false);
     const [cookies, setCookie] = useCookies(['user']);
-    const handleAuthentication = () =>{
-        setCookie('Name',userName, {expires: 7,path: '/'});
-        setCookie('Password',pwd, {expires: 7,path: '/'});
+    
+    const handleAuthentication = async (e) =>{
+        // let expiresDay = new Date('2023-08-13 23:59:59');
+        // setCookie('Name',userName, {expires: expiresDay, path: '/'});
+        // setCookie('Password',pwd, {expires: expiresDay, path: '/'});
+        // console.log('userName',userName);
+        // console.log('pwd',pwd);
+        e.preventDefault();
+        const res = await axios.get(
+            "http://18.182.16.178/users/" + userName 
+        );
+        console.log('res', res.data);
+        console.log('hello');
+        if(pwd === res.data[0].pwd){
+            console.log('pwd true');
+            const session_res = await axios.get(
+                "http://18.182.16.178/users/"+ userName +"/session"
+            );
+            console.log(session_res.data);
+            // console.log(session_res.data.length);
+            //create session id and token
+            if(session_res.data.length === 0){
+                console.log('token aint exist');
+                setFirstLogin(true);
+                //create new session id and token
+                const res = await axios.post(
+                    "http://18.182.16.178/users/"+ userName +"/session"
+                );
+                //if user accepted cookie, call session storage api and save cookie info(session id + token + expiration) then redirect to user home
+                //else: redirect to user home
+                if (acceptCookie === true){
+                    const session_res = await axios.get(
+                        "http://18.182.16.178/users/"+ userName +"/session"
+                    );
+                    setSessionID(session_res.data[0].session_id);
+                    setToken(session_res.data[0].token);
+                    setExpiredDate(new Date(session_res.data[0].expired_time));
+                    setCookie("Session ID", sessionID, {expires: expiredDate, path: '/'});
+                    setCookie("Token", token, {expires: expiredDate, path: '/'});
+                    navigate(`/${userName}`, {replace: true});
+                }else{
+                    navigate(`/${userName}`, {replace: true});
+                }
+                
+            }else {
+                setFirstLogin(false);
+                if (cookies){
+                    navigate(`/${userName}`, {replace: true});
+                }else {
+                    navigate("/login", {replace: true});
+                }
+                //if cookies is still valid, keep logged in state
+                //else: redirect to login 
+                // const res = await axios.post(
+                //     "http://18.182.16.178/users/"+ userName + "/session/update",
+                //     [userName]
+                // );
+                // console.log(res.data);
+                // console.log("token is updated");
+            }
+
+            // if(acceptCookie === true){
+            //     const updatedsession_res = await axios.get(
+            //         "http://18.182.16.178/users/"+ userName +"/session"
+            //     );
+            //     setSessionID(updatedsession_res.data[0].session_id);
+            //     setToken(updatedsession_res.data[0].token);
+            //     setExpiredDate(new Date(updatedsession_res.data[0].expired_time));
+            //     setCookie("Session ID", sessionID, {expires: expiredDate, path: '/'});
+            //     setCookie("Token", token, {expires: expiredDate, path: '/'});
+            //     console.log('session id', sessionID);
+            //     console.log('token', token);
+            //     console.log('expired date', expiredDate);
+                
+            // }else{
+            //     console.log("acceptcookie",acceptCookie);
+            // }
+            // navigate("/", { replace: true });
+        }else {
+            console.log('pwd wrong',pwd)
+        }
     }
+    // useEffect(()=>{
+    //     handleAuthentication();
+    // })
   return (
     <div className='login'>
         <Link to={'/'}>
@@ -32,7 +119,7 @@ function Login() {
                     id='login-user-name-input' 
                     className='login-input' 
                     type={'text'}
-                    onBlur={(e) => setUserName(e.target.value)}
+                    onChange={(e) =>setUserName(e.target.value)}
                 />
                 <h5>Password</h5>
                 <input 
@@ -40,33 +127,30 @@ function Login() {
                     id='login-pwd-input' 
                     className='login-input' 
                     type={'password'}
-                    onBlur={(e) => setPwd(e.target.value)}
+                    onChange={(e) => setPwd(e.target.value)}
                 />
                 <div className='login-remember-me'>
                     <input
                         id='login-remember-checkbox' 
                         type={'checkbox'}
-                        onClick={() => {
-                            acceptCookie === false? setAcceptCookie(true): setAcceptCookie(false);
-                            console.log(acceptCookie);
+                        defaultChecked=''
+                        value={acceptCookie}
+                        onClick={(e) => {
+                            // acceptCookie === false? setAcceptCookie(true): setAcceptCookie(false);
+                            if(acceptCookie===false){
+                                setAcceptCookie(true);
+                                console.log(acceptCookie);
+                            }else{
+                                setAcceptCookie(false)
+                                console.log(acceptCookie);
+                            }
                         }}
                     />
                     <p>Remember me</p>
                 </div>
-                <button className='login-sign-in-button' onChange={handleAuthentication}>Sign in</button>
+                <button className='login-sign-in-button' onClick={handleAuthentication}>Sign in</button>
             </form>
-            <br/>
-            {cookies.Name && (
-                    <div>
-                        Name: <p>{cookies.Name}</p>
-                    </div>
-            )}
             <p>
-            {cookies.Password && (
-                    <div>
-                        Password: <p>{cookies.Password}</p>
-                    </div>
-            )}
                 Dont have an account? Sign up right here
             </p>
             <Link to={'/register'}>

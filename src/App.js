@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './Homepage';
 import Login from './Login';
 import Register from './Register';
+import Home from './Home';
 // import { useStateValue } from './StateProvider';
 
 function App() {
@@ -29,6 +30,13 @@ function App() {
             path='/register' 
             element={[
               <Register/>
+            ]}>
+          </Route>
+          
+          <Route 
+            path='/dev.nhat' 
+            element={[
+              <Home/>
             ]}>
           </Route>
         </Routes>

@@ -30,6 +30,7 @@ function Register() {
             e.target.style.border = "1px solid #04AA6D";
             setUserName(e.target.value);
             setUserNameIsValid(true);
+            document.getElementById('alert1').innerHTML = "";
         }else{
             e.target.style.border = "1px solid #f44336";
             if (map_data.has(e.target.value)) {
@@ -114,11 +115,10 @@ function Register() {
 
     const checkConfirmedPassword = e =>{
         if (e.target.value === password){
-            console.log('password matched');
+            document.getElementById('alert3').innerHTML = "";
             e.target.style.border = "1px solid #04AA6D";
             setConfirmPasswordIsMatched(true);
         }else{
-            console.log('password aint match');
             document.getElementById('alert3').innerHTML = "Password aint matched";
             e.target.style.border = "1px solid #f44336";
             setConfirmPasswordIsMatched(false);
@@ -138,8 +138,7 @@ function Register() {
             const req = await axios.post(
                 "http://18.182.16.178/users",
                 {'name':userName,'pwd':password}
-            )
-            console.log(req);
+            );
             document.getElementById('login-user-name-input').value = userName;
             document.getElementById('login-pwd-input').value = password;
         }else {
