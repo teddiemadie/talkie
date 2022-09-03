@@ -9,3 +9,15 @@ h1, p{
   margin: 0;
 }
 
+a{
+  text-decoration: none;
+  color: black;
+  padding-left: 10px;
+  border-left: 2px solid lightgray;
+}
+
+li{
+  text-align: left;
+  list-style-type: none;
+  margin-bottom: 10px;
+}

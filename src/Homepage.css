@@ -1,0 +1,74 @@
+.hp-nav{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 15px 0px 15px 0px;
+    height: 30px;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+    position: sticky;
+    top: 0;
+    margin-bottom: 20px;
+}
+
+.hp-brand{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 8%;
+    align-self: left;
+}
+
+.hp-logo{
+    width: 40px;
+    max-width: 100%;
+    height: auto;
+    margin-left: 10px;
+}
+
+.hp-brand > span{
+    font-family: Dancing Script;
+    font-weight: 500;
+    font-size: 24px;
+    margin-left: 12px;
+}
+
+.hp-nav-button-container{
+    display: flex;
+    flex-direction: row;
+    margin-right: 5%;
+}
+
+.hp-nav-button{
+    font-family: Montserrat;
+    margin:0 10px 0 10px;
+    background-color: white;
+    border: 2px solid;
+}
+
+.hp-nav-button:hover{
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.hp-container{
+    padding: 10% 10% 10% 10%;
+    display: flex;
+    flex-direction: row;
+}
+
+.hp-container-nav-section{
+    color: #787785;
+    font-family: Montserrat;
+}
+
+.hp-container-nav-section:hover{
+    font-size: 30px;
+    border-left: 10px solid;
+    font-weight: 600;
+}
+
+.hp-content-illustration{
+    width: 300px;
+}

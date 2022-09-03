@@ -154,7 +154,7 @@ function Login() {
                 Dont have an account? Sign up right here
             </p>
             <Link to={'/register'}>
-                <button className='login-register-button'>Create your Talkie account</button>
+                <button className='login-register-button'>Create your Ally account</button>
             </Link>
         </div>
     </div>

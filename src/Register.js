@@ -154,7 +154,7 @@ function Register() {
                 alt='login logo'
             />
             <p>Welcome to</p>
-            <h1>Talkie</h1>
+            <h1>Ally</h1>
             {/* <p>Make teamwork easy than ever</p> */}
             <video className='register-video' width='200' height='200' loop autoPlay muted>
                 <source src={Video} type='video/mp4'/>
