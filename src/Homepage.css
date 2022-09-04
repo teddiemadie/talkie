@@ -53,12 +53,55 @@
 }
 
 .hp-container{
-    padding: 10% 10% 10% 10%;
+    padding: 0 10% 10% 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* height: max-content; */
+}
+
+.hp-container-service-name{
+    font-family: Dancing Script;
+    font-weight: 600;
+    font-size: 80px;
+}
+
+.hp-container-slogan{
+    font-family: Monsterrat;
+    color: #041c44;
+    font-size: 24px;
+}
+
+.hp-container-button{
+    font-family: Montserrat;
+    margin:0 10px 0 10px;
+    background-color: white;
+    border: 0;
+    margin-bottom: 5%;
+}
+
+.hp-container-button:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.hp-container-nav-and-content-illustation{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hp-container-nav{
+    /* margin-top: 30px; */
+    margin-bottom: 15px;
 }
 
 .hp-container-nav-section{
+    text-decoration: none;
+    color: black;
+    padding-left: 10px;
+    border-left: 2px solid lightgray;
     color: #787785;
     font-family: Montserrat;
 }
@@ -70,5 +113,50 @@
 }
 
 .hp-content-illustration{
-    width: 300px;
+    width: 30%;
+    float: right;
+}
+
+.hp-container-content{
+    margin-top: 8rem;
+    margin-bottom: 16rem;
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+}
+
+#key-message1{
+    flex: 0.5;
+    font-size: 40px;
+}
+
+#key-message1-detail{
+    flex: 0.5;
+    font-size: 16px;
+    font-family: Monterrat;
+    text-align: left;
+}
+
+#key-message2{
+    flex: 0.5;
+    font-size: 40px;
+}
+
+#key-message2-detail{
+    flex: 0.5;
+    font-size: 16px;
+    font-family: Monterrat;
+    text-align: left;
+}
+
+#key-message3{
+    flex: 0.5;
+    font-size: 40px;
+}
+
+#key-message3-detail{
+    flex: 0.5;
+    font-size: 16px;
+    font-family: Monterrat;
+    text-align: left;
 }
